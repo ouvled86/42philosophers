@@ -1,0 +1,7 @@
+Parsing Checks:
+
+X - Program should take 4/5 arguments (Error if anything else)
+X - Analyze input. ./philo [NUM_OF_PHILOS] [TIME_TO_DIE] [TIME_TO_EAT] [TIME_TO_SLEEP] [*NUMBER_OF_MEALS]
+X - Verify input is in positive numbers, NUM_OF_PHILOS limit should be 200.
+X - Create a structure to hold all the data, intialize it.
+X - Intialize the mutexes and threads, with each thread representing a philo.

@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/06/14 19:28:30 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/06/14 22:47:28 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <limits.h>
 # include <sys/time.h>
 
 typedef pthread_mutex_t	t_mutex;
 
+typedef struct s_table	t_table;
 typedef struct s_philo
 {
 	pthread_t	thread;
 	int			philo_id;
+	size_t		t_of_start;
 	size_t		last_meal;
 	t_mutex		*first_fork;
 	t_mutex		*second_fork;
@@ -37,16 +40,16 @@ typedef struct s_clock
 	size_t		t_to_die;
 	size_t		t_to_eat;
 	size_t		t_to_sleep;
-	size_t		t_of_start;
 }				t_clock;
 
 typedef struct s_table
 {
 	int			meals_num;
-	int			dead_flag;
-	t_clock		*clock;
+	int			philos_num;
+	bool		dead_flag;
 	t_philo		*philos;
 	t_mutex		*forks;
+	t_clock		*clock;
 }				t_table;
 
 #endif

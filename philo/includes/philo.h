@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/06/14 22:47:28 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/06/14 22:52:44 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,9 @@ typedef struct s_table
 	t_mutex		*forks;
 	t_clock		*clock;
 }				t_table;
+
+bool	check_num(char *av);
+size_t	ft_atol(char *s);
+void	check_args_input(int ac, char **av, t_table *data);
 
 #endif

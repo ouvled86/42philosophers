@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/06/14 22:52:44 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/06/22 20:59:18 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,13 @@ typedef struct s_table
 	t_clock		*clock;
 }				t_table;
 
-bool	check_num(char *av);
 size_t	ft_atol(char *s);
+size_t	ft_strlen(char *s);
+bool	check_num(char *av);
 void	check_args_input(int ac, char **av, t_table *data);
+void	err_exit(int status, char *msg);
+bool	check_clock(t_clock *c);
+
+
 
 #endif

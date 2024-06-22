@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   safe_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 18:39:52 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/06/22 21:01:02 by ouel-bou         ###   ########.fr       */
+/*   Created: 2024/06/22 20:51:21 by ouel-bou          #+#    #+#             */
+/*   Updated: 2024/06/22 20:53:30 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	main(int ac, char **av)
+void	err_exit(int status, char *msg)
 {
-	t_table	*data;
-
-	check_args_input(ac, av, data);
-	printf("TTD: %zu TTE: %zu TTS: %zu\n", data->clock->t_to_die, data->clock->t_to_eat, data->clock->t_to_sleep);
+	printf("%s\n", msg);
+	exit (status);
 }

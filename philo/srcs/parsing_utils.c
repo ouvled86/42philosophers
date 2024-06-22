@@ -6,11 +6,21 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:51:27 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/06/14 22:51:42 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/06/22 20:59:27 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+size_t	ft_strlen(char *s)
+{
+	size_t	r;
+
+	r = 0;
+	while (s[r])
+		r++;
+	return (r);
+}
 
 bool	check_num(char *av)
 {
@@ -42,5 +52,16 @@ size_t	ft_atol(char *s)
 		ret = ret * 10 + (s[i] - '0');
 		i++;
 	}
+	return (ret);
+}
+
+bool	check_clock(t_clock *c)
+{
+	bool	ret;
+
+	ret = true;
+	if (c->t_to_die > INT_MAX || c->t_to_eat > INT_MAX 
+		|| c->t_to_sleep > INT_MAX)
+		ret = false;
 	return (ret);
 }

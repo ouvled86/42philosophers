@@ -6,13 +6,13 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:49:08 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/06/14 22:53:04 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/06/22 21:03:14 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static bool	args_count(int ac)
+static bool	targs_count(int ac)
 {
 	if (ac == 5 || ac == 6)
 		return (true);
@@ -53,14 +53,6 @@ static bool	parse_input(char **av, t_clock *clock)
 	flag = check_clock(c);
 	clock = c;
 	return (flag);
-}
-
-static bool	check_clock(t_clock *c)
-{
-	if (c->t_to_die > INT_MAX || c->t_to_eat > INT_MAX 
-		|| c->t_to_sleep > INT_MAX)
-		return (false);
-	return (true);
 }
 
 void	check_args_input(int ac, char **av, t_table *data)

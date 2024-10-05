@@ -31,8 +31,14 @@ bool	check_num(char *av)
 	flag = true;
 	while ((av[i] >= 9 && av[i] <= 13) || av[i] == 32)
 		i++;
-	if (!(av[i] >= '0' && av[i] < '9') || av[i] != '+')
-		flag = false;
+	if (av[i] == '+')
+		i++;
+	while (av[i])
+	{
+		if (!(av[i] >= '0' && av[i] < '9'))
+			flag = false;
+		i++;
+	}
 	return (flag);
 }
 
@@ -62,6 +68,9 @@ bool	check_clock(t_clock *c)
 	ret = true;
 	if (c->t_to_die > INT_MAX || c->t_to_eat > INT_MAX 
 		|| c->t_to_sleep > INT_MAX)
+		ret = false;
+	if (c->t_to_die < 60 || c->t_to_eat < 60 
+		|| c->t_to_sleep < 60)
 		ret = false;
 	return (ret);
 }

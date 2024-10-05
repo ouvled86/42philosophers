@@ -16,6 +16,6 @@ int	main(int ac, char **av)
 {
 	t_table	*data;
 
-	check_args_input(ac, av, data);
-	printf("TTD: %zu TTE: %zu TTS: %zu\n", data->clock->t_to_die, data->clock->t_to_eat, data->clock->t_to_sleep);
+	data = check_args_input(ac, av);
+	
 }

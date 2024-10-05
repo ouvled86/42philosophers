@@ -55,7 +55,7 @@ typedef struct s_table
 size_t	ft_atol(char *s);
 size_t	ft_strlen(char *s);
 bool	check_num(char *av);
-void	check_args_input(int ac, char **av, t_table *data);
+t_table	*check_args_input(int ac, char **av);
 void	err_exit(int status, char *msg);
 bool	check_clock(t_clock *c);
 

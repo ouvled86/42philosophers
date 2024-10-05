@@ -12,7 +12,7 @@
 
 #include "../includes/philo.h"
 
-static bool	targs_count(int ac)
+static bool	args_count(int ac)
 {
 	if (ac == 5 || ac == 6)
 		return (true);
@@ -39,7 +39,7 @@ static bool	check_input(char **av)
 	return (flag);
 }
 
-static bool	parse_input(char **av, t_clock *clock)
+static bool	parse_input(char **av, t_clock **clock)
 {
 	t_clock	*c;
 	bool	flag;
@@ -51,11 +51,11 @@ static bool	parse_input(char **av, t_clock *clock)
 	c->t_to_eat = ft_atol(av[3]);
 	c->t_to_sleep = ft_atol(av[4]);
 	flag = check_clock(c);
-	clock = c;
+	*clock = c;
 	return (flag);
 }
 
-void	check_args_input(int ac, char **av, t_table *data)
+t_table	*check_args_input(int ac, char **av)
 {
 	t_clock	*clock;
 	t_table	*table;
@@ -65,7 +65,7 @@ void	check_args_input(int ac, char **av, t_table *data)
 		exit (10);
 	if (check_input(av) != true)
 		exit (11);
-	if (parse_input(av, clock) != true)
+	if (parse_input(av, &clock) != true)
 		exit (12);
 	table = (t_table *)malloc(sizeof(t_table));
 	table->clock = clock;
@@ -77,5 +77,5 @@ void	check_args_input(int ac, char **av, t_table *data)
 	else
 		table->meals_num = ft_atol(av[5]);
 	table->dead_flag = false;
-	data = table;
+	return (table);
 }

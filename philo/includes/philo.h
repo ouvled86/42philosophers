@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/06/22 20:59:18 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/06 01:13:56 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <pthread.h>
 # include <stdio.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
@@ -52,12 +53,26 @@ typedef struct s_table
 	t_clock		*clock;
 }				t_table;
 
+typedef enum e_calls
+{
+	CREATE,
+	JOIN,
+	INIT,
+	DESTROY,
+	LOCK,
+	UNLOCK,
+}	t_calls;
+
 size_t	ft_atol(char *s);
 size_t	ft_strlen(char *s);
 bool	check_num(char *av);
 t_table	*check_args_input(int ac, char **av);
 void	err_exit(int status, char *msg);
 bool	check_clock(t_clock *c);
+
+void	thread_handle(t_philo *philos, t_calls call, int thread_id);
+void	mutex_handle(t_mutex *forks, t_calls call, int fork_id);
+void	handle_errno(int status);
 
 
 

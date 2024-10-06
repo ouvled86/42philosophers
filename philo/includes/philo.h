@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/06 01:13:56 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/06 02:44:34 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ typedef struct s_philo
 {
 	pthread_t	thread;
 	int			philo_id;
-	size_t		t_of_start;
+	int			meals_eaten;
 	size_t		last_meal;
-	t_mutex		*first_fork;
-	t_mutex		*second_fork;
+	t_mutex		first_fork;
+	t_mutex		second_fork;
 	t_table		*table;
 }				t_philo;
 

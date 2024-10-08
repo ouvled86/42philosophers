@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:39:52 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/06 02:51:42 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:54:47 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,44 @@ void	create_mutex(t_table *data, int count)
 	}
 }
 
+void	assign_forks(t_table *table)
+{
+	t_philo	*philos;
+	int		i;
+
+	philos = table->philos;
+	i = 0;
+	while (i < table->philos_num)
+	{
+		if (philos[i].philo_id % 2 == 0)
+		{
+			philos[i].first_fork = &table->forks[i];
+			philos[i].second_fork = &table->forks[(i + 1) % table->philos_num];
+		}
+		else
+		{
+			philos[i].first_fork = &table->forks[(i + 1) % table->philos_num];
+			philos[i].second_fork = &table->forks[i];
+		}
+		i++;
+	}
+}
+
 void	init_data(t_table **data)
 {
 	t_table	*table;
+	t_philo	*philos;
+	int		i;
 
 	table = *data;
 	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->philos_num);
 	table->forks = (t_mutex *)malloc(sizeof(t_mutex) * table->philos_num);
+	philos = table->philos;
 	if (!table->philos || !table->forks)
 		err_exit(81, "Malloc failed\n");
 	create_philos(table, table->philos_num);
 	create_mutex(table, table->philos_num);
-	// assign forks!
+	assign_forks(table);
 }
 
 int	main(int ac, char **av)
@@ -58,6 +84,6 @@ int	main(int ac, char **av)
 
 	data = check_args_input(ac, av);
 	init_data(&data);
-	// for (int i = 0; i < data->philos_num; i++)
-	// 	thread_handle(data->philos, JOIN, i);
+	for (int i = 0; i < data->philos_num; i++)
+		thread_handle(data->philos, JOIN, i);
 }

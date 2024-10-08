@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/06 02:44:34 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:52:26 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_philo
 	int			philo_id;
 	int			meals_eaten;
 	size_t		last_meal;
-	t_mutex		first_fork;
-	t_mutex		second_fork;
+	t_mutex		*first_fork;
+	t_mutex		*second_fork;
 	t_table		*table;
 }				t_philo;
 
@@ -74,6 +74,7 @@ void	thread_handle(t_philo *philos, t_calls call, int thread_id);
 void	mutex_handle(t_mutex *forks, t_calls call, int fork_id);
 void	handle_errno(int status);
 
+void	*func(void *data);
 
 
 #endif

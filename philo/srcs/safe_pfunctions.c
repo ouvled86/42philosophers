@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 22:39:26 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/08 19:55:30 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:59:32 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@
 
 void	*func(void *data)
 {
-	printf("t");
 	sleep(20);
 	return NULL;
 }
@@ -79,8 +78,6 @@ void	thread_handle(t_philo *philos, t_calls call, int thread_id)
 	handle_errno(status);
 }
 
-// Handle 2 more mutex_handle calls
-
 void	mutex_handle(t_mutex *forks, t_calls call, int fork_id)
 {
 	int	status;
@@ -90,6 +87,10 @@ void	mutex_handle(t_mutex *forks, t_calls call, int fork_id)
 		status = pthread_mutex_init(&forks[fork_id], NULL);
 	else if (call == LOCK)
 		status = pthread_mutex_lock(&forks[fork_id]);
+	else if (call == UNLOCK)
+		status = pthread_mutex_lock(&forks[fork_id]);
+	else if (call == DESTROY)
+		status = pthread_mutex_destroy(&forks[fork_id]);
 	handle_errno(status);
 }
 

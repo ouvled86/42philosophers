@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:39:52 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/08 19:54:47 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/08 21:51:23 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ void	create_mutex(t_table *data, int count)
 
 	i = 0;
 	while (i < count)
-	{
-		mutex_handle(data->forks, INIT, i);
-		i++;
-	}
+		mutex_handle(data->forks, INIT, i++);
 }
 
 void	assign_forks(t_table *table)
@@ -51,11 +48,13 @@ void	assign_forks(t_table *table)
 		{
 			philos[i].first_fork = &table->forks[i];
 			philos[i].second_fork = &table->forks[(i + 1) % table->philos_num];
+			printf("Philo ID: %d, 1st fork address: %p, 2nd fork address: %p\n", i, philos[i].first_fork, philos[i].second_fork);
 		}
 		else
 		{
 			philos[i].first_fork = &table->forks[(i + 1) % table->philos_num];
 			philos[i].second_fork = &table->forks[i];
+			printf("Philo ID: %d, 1st fork address: %p, 2nd fork address: %p\n", i, philos[i].first_fork, philos[i].second_fork);
 		}
 		i++;
 	}
@@ -73,7 +72,6 @@ void	init_data(t_table **data)
 	philos = table->philos;
 	if (!table->philos || !table->forks)
 		err_exit(81, "Malloc failed\n");
-	create_philos(table, table->philos_num);
 	create_mutex(table, table->philos_num);
 	assign_forks(table);
 }

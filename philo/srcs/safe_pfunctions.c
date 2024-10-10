@@ -6,57 +6,11 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 22:39:26 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/08 19:59:32 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:58:01 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-// bool	check_meals(t_philo *philos, int meals_num, int count)
-// {
-// 	bool	ret;
-// 	int		i;
-
-// 	ret = true;
-// 	i = 0;
-// 	while (i < count)
-// 	{
-// 		if (philos->meals_eaten < meals_num)
-// 			ret = false;
-// 		i++;
-// 	}
-// 	return (ret);
-// }
-
-// void	*monitor_routine(void *data)
-// {
-// 	t_table	*table;
-
-// 	table = (t_table *)data;
-// 	while (86)
-// 	{
-// 		if (table->dead_flag)
-// 			break ;
-// 		if (table->meals_num != -1 
-// 			&& check_meals(table->philos, table->meals_num, table->philos_num))
-// 			break ;
-// 	}
-// 	// clean up
-// }
-
-// void	*philo_routine(void *data)
-// {
-// 	t_philo	*philo;
-// 	t_table	*table;
-// 	t_mutex	*mutex;
-
-// 	philo = (t_philo *)data;
-// 	table = philo->table;
-// 	mutex_handle(philo->first_fork, LOCK);
-// 	// print started eating and save last meal!
-// 	mutex_handle(philo->second_fork, LOCK);
-// 	// create a precise sleeping function to sleep the eating thread
-// }
 
 void	*func(void *data)
 {
@@ -64,7 +18,7 @@ void	*func(void *data)
 	return NULL;
 }
 
-void	thread_handle(t_philo *philos, t_calls call, int thread_id)
+void	philo_handle(t_philo *philos, t_calls call, int thread_id)
 {
 	t_philo	philo;
 	int		status;
@@ -78,7 +32,7 @@ void	thread_handle(t_philo *philos, t_calls call, int thread_id)
 	handle_errno(status);
 }
 
-void	mutex_handle(t_mutex *forks, t_calls call, int fork_id)
+void	fork_handle(t_mutex *forks, t_calls call, int fork_id)
 {
 	int	status;
 

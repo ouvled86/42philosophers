@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/10 15:23:15 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:31:28 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@ typedef struct s_clock
 	size_t		t_to_die;
 	size_t		t_to_eat;
 	size_t		t_to_sleep;
+	size_t		start_time;
 }				t_clock;
 
 typedef struct s_table
 {
-	int			meals_num;
 	int			philos_num;
 	bool		dead_flag;
 	bool		start_flag;
+	size_t		meals_num;
+	pthread_t	monitor;
 	t_philo		*philos;
 	t_mutex		*forks;
 	t_mutex		read;

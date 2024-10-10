@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/10 11:59:35 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:23:15 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ typedef pthread_mutex_t	t_mutex;
 typedef struct s_table	t_table;
 typedef struct s_philo
 {
-	pthread_t	thread;
 	int			philo_id;
-	int			meals_eaten;
+	size_t		meals_eaten;
 	size_t		last_meal;
 	t_mutex		*first_fork;
 	t_mutex		*second_fork;
 	t_table		*table;
+	pthread_t	thread;
 }				t_philo;
 
 typedef struct s_clock
@@ -91,6 +91,8 @@ void	init_data(t_table **data);
 
 bool	safe_bool(bool *flag, t_operation op, t_mutex *mtx, bool value);
 size_t	safe_num(size_t *num, t_operation op, t_mutex *mtx, size_t value);
+
+void	launch_dinner(t_table *data);
 
 void	*func(void *data);
 

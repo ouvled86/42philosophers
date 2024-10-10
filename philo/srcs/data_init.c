@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:54:21 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/10 11:54:59 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:22:16 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	create_philos(t_table *data, int count)
 		thread_handle(data->philos, CREATE, i);
 		data->philos[i].philo_id = i;
 		data->philos[i].table = data;
+		data->philos[i].last_meal = -1;
+		data->philos[i].meals_eaten = 0;
 		i++;
 	}
 }

@@ -34,7 +34,7 @@ void	create_forks(t_table *data, int count)
 
 	i = 0;
 	while (i < count)
-		fork_handle(&data->forks[i], INIT);
+		fork_handle(&data->forks[i++], INIT);
 }
 
 void	assign_forks(t_table *table)

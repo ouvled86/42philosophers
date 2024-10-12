@@ -26,7 +26,7 @@ void	philo_handle(t_philo *philos, t_calls call, int thread_id)
 	philo = philos[thread_id];
 	status = 0;
 	if (call == CREATE)
-		status = pthread_create(&philo.thread, NULL, func, &philo);
+		status = pthread_create(&philo.thread, NULL, philo_routine, &philo);
 	else if (call == JOIN)
 		status = pthread_join(philo.thread, NULL);
 	handle_errno(status);

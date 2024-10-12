@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 22:39:26 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/10 11:58:01 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/12 19:19:01 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,25 @@ void	philo_handle(t_philo *philos, t_calls call, int thread_id)
 	philo = philos[thread_id];
 	status = 0;
 	if (call == CREATE)
-		status = pthread_create(&philo.thread, NULL, func, NULL);
+		status = pthread_create(&philo.thread, NULL, func, &philo);
 	else if (call == JOIN)
 		status = pthread_join(philo.thread, NULL);
 	handle_errno(status);
 }
 
-void	fork_handle(t_mutex *forks, t_calls call, int fork_id)
+void	fork_handle(t_mutex *fork, t_calls call)
 {
 	int	status;
 
 	status = 0;
 	if (call == INIT)
-		status = pthread_mutex_init(&forks[fork_id], NULL);
+		status = pthread_mutex_init(fork, NULL);
 	else if (call == LOCK)
-		status = pthread_mutex_lock(&forks[fork_id]);
+		status = pthread_mutex_lock(fork);
 	else if (call == UNLOCK)
-		status = pthread_mutex_lock(&forks[fork_id]);
+		status = pthread_mutex_lock(fork);
 	else if (call == DESTROY)
-		status = pthread_mutex_destroy(&forks[fork_id]);
+		status = pthread_mutex_destroy(fork);
 	handle_errno(status);
 }
 

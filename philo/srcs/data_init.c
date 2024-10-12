@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:54:21 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/10 15:22:16 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/12 19:55:49 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_philos(t_table *data, int count)
 	i = 0;
 	while (i < count)
 	{
-		thread_handle(data->philos, CREATE, i);
+		philo_handle(data->philos, CREATE, i);
 		data->philos[i].philo_id = i;
 		data->philos[i].table = data;
 		data->philos[i].last_meal = -1;
@@ -34,7 +34,7 @@ void	create_forks(t_table *data, int count)
 
 	i = 0;
 	while (i < count)
-		mutex_handle(data->forks, INIT, i++);
+		fork_handle(&data->forks[i], INIT);
 }
 
 void	assign_forks(t_table *table)

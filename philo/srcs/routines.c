@@ -108,19 +108,17 @@ void	*philo_routine(void *data)
 {
 	t_philo	*philo;
 	t_table	*table;
-	t_clock	*clock;
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	clock = table->clock;
 	while (!safe_bool(&table->start_flag, READ, &table->read, NULL))
-		;
+		;	
 	while (!safe_bool(&table->dead_flag, READ, &table->read, NULL)
 		&& !safe_bool(&table->finish_flag, READ, &table->read, NULL))
 	{
-		philo_eat(philo, clock);
-		philo_sleep(philo, clock);
-		philo_think(philo, clock);
+		philo_eat(philo, table->clock);
+		philo_sleep(philo, table->clock);
+		philo_think(philo, table->clock);
 	}
 	return (NULL);
 }

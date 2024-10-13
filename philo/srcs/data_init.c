@@ -19,11 +19,12 @@ void	create_philos(t_table *data, int count)
 	i = 0;
 	while (i < count)
 	{
-		philo_handle(data->philos, CREATE, i);
+		// philo_handle(data->philos, CREATE, i);
 		data->philos[i].philo_id = i;
 		data->philos[i].table = data;
 		data->philos[i].last_meal = -1;
 		data->philos[i].meals_eaten = 0;
+		// printf("Philo ID: %d\n", data->philos[i].philo_id);
 		i++;
 	}
 }
@@ -86,6 +87,7 @@ void	init_data(t_table **data)
 	if (!table->philos || !table->forks)
 		err_exit(81, "Malloc failed\n");
 	create_forks(table, table->philos_num);
+	create_philos(table, table->philos_num);
 	assign_forks(table);
 	table->start_flag = false;
 	table->dead_flag = false;

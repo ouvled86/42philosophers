@@ -18,6 +18,8 @@ int	main(int ac, char **av)
 
 	data = check_args_input(ac, av);
 	init_data(&data);
+	for (int i = 0; i < data->philos_num; i++)
+		printf("Philo ID: %d\n", data->philos[i].philo_id);
 	launch_dinner(data);
 	
 }

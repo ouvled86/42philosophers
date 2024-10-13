@@ -12,12 +12,6 @@
 
 #include "../includes/philo.h"
 
-void	*func(void *data)
-{
-	sleep(20);
-	return NULL;
-}
-
 void	philo_handle(t_philo *philos, t_calls call, int thread_id)
 {
 	t_philo	philo;

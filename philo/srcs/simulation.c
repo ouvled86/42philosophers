@@ -15,6 +15,7 @@
 void	launch_dinner(t_table *data)
 {
 	// create_philos(data, data->philos_num);
+	printf("MAIN! Start flag: %d, dead flag: %d, finish flag: %d\n", data->start_flag, data->dead_flag, data->finish_flag);
 	for (int i = 0; i < data->philos_num; i++)
 		philo_handle(data->philos, CREATE, i);
 	// for (int i = 0; i < data->philos_num; i++)
@@ -24,11 +25,11 @@ void	launch_dinner(t_table *data)
 	// while (!data->finish_flag && !data->dead_flag)
 	// 	;
 	pthread_create(&data->monitor, NULL, monitor_routine, data);
+	pthread_join(data->monitor, NULL);
 	for (int i = 0; i < data->philos_num; i++)
 		philo_handle(data->philos, JOIN, i);
 	// for (int i = 0; i < data->philos_num; i++)
 	// 	fork_handle(&data->forks[i], DESTROY);
-	// pthread_join(data->monitor, NULL);
 	// pthread_mutex_destroy(&data->read);
 	// pthread_mutex_destroy(&data->write);
 }

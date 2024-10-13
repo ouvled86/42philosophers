@@ -22,7 +22,9 @@ bool	safe_bool(bool *flag, t_operation op, t_mutex *mtx, bool value)
 		table_mutex(mtx, LOCK);
 		printf("MUTEX LOCKED\n");
 		ret = *flag;
+		printf("ret is %d\n", *flag);
 		table_mutex(mtx, UNLOCK);
+		printf("MUTEX UNLOCK\n");
 	}
 	else if (op == WRITE)
 	{

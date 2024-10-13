@@ -111,7 +111,8 @@ void	*philo_routine(void *data)
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	while (!safe_bool(&table->start_flag, READ, &table->read, NULL))
+	printf("Start flag: %d, dead flag: %d, finish flag: %d\n", table->start_flag, table->dead_flag, table->finish_flag);
+	while (safe_bool(&table->start_flag, READ, &table->read, NULL))
 		;	
 	while (!safe_bool(&table->dead_flag, READ, &table->read, NULL)
 		&& !safe_bool(&table->finish_flag, READ, &table->read, NULL))

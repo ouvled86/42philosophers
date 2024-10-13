@@ -22,7 +22,10 @@ void	philo_handle(t_philo *philos, t_calls call, int thread_id)
 	if (call == CREATE)
 		status = pthread_create(&philo.thread, NULL, philo_routine, &philo);
 	else if (call == JOIN)
+	{
 		status = pthread_join(philo.thread, NULL);
+	}
+		printf("Thread ID is: %d - status: %d\n", thread_id, status);
 	handle_errno(status);
 }
 

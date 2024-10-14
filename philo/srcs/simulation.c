@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:15:58 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/14 20:09:02 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:16:50 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ void	launch_dinner(t_table *data)
 	pthread_mutex_lock(&data->table);
 	data->start_flag = true;
 	pthread_mutex_unlock(&data->table);
+	printf("MAIN - CURRENT TIME: %ld\n", get_time());
 	// safe_bool(&data->start_flag, WRITE, &data->table, true);
 	// printf("START IS SET TO %d\n", data->start_flag);
-	// for (int i = 0; i < data->philos_num; i++)
-	// 	philo_handle(data->philos, JOIN, i);
+	for (int i = 0; i < data->philos_num; i++)
+		philo_handle(data->philos, JOIN, i);
 
 	
 	// create_philos(data, data->philos_num);

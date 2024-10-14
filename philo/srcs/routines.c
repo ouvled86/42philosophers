@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/14 20:08:53 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:16:36 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,8 @@ void	philo_think(t_philo *philo, t_clock *clock)
 
 void	wait_start(t_table *table)
 {
-	while (!table->start_flag)
+	while (!safe_bool(&table->start_flag, READ, &table->table, NULL))
 		;
-	// printf("Start time: %ld ms, spinlock break time: %ld\n", get_time(), table->clock->start_time);
 }
 
 void	*philo_routine(void *data)
@@ -117,8 +116,9 @@ void	*philo_routine(void *data)
 	t_table	*table;
 
 	philo = (t_philo *)data;
-	// table = philo->table;
+	table = philo->table;
 	wait_start(table);
+	printf("THS - CURRENT TIME: %ld\n", get_time());
 	// printf("Simulation started\n");
 	// printf("Dead flag: ~ finish flag: %d\n", philo->table->finish_flag);
 	while (1)

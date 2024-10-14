@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 21:53:39 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/12 19:57:29 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:55:44 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,24 @@ bool	safe_bool(bool *flag, t_operation op, t_mutex *mtx, bool value)
 	ret = false;
 	if (op == READ)
 	{
-		// table_mutex(mtx, LOCK);
+		pthread_mutex_lock(mtx);
+		printf("R-Table mutex locked\n");
 		ret = *flag;
-		// table_mutex(mtx, UNLOCK);
+		pthread_mutex_unlock(mtx);
+		printf("R - Table mutex unlocked, the value is %d\n", *flag);
 	}
 	else if (op == WRITE)
 	{
-		// table_mutex(mtx, LOCK);
+		pthread_mutex_lock(mtx);
+		printf("Table mutex locked\n");
 		*flag = value;
-		// table_mutex(mtx, UNLOCK);
+		pthread_mutex_unlock(mtx);
+		printf("Table mutex unlocked, the value is %d\n", *flag);
 	}
 	return (ret);
 }
+
+
 
 size_t	safe_num(size_t *num, t_operation op, t_mutex *mtx, size_t value)
 {

@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/12 19:49:39 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:47:06 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_table
 	pthread_t	monitor;
 	t_philo		*philos;
 	t_mutex		*forks;
-	t_mutex		read;
-	t_mutex		write;
+	t_mutex		table;
+	t_mutex		status;
 	t_clock		*clock;
 }				t_table;
 

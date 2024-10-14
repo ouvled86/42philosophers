@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/12 19:54:51 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:08:53 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,33 @@ int	philo_is_dead(t_philo *philos, t_clock *clock, int count)
 	return (ret);
 }
 
-void	*monitor_routine(void *data)
-{
-	t_table	*table;
-	t_clock	*clock;
-	int		dead_philo;
+// void	*monitor_routine(void *data)
+// {
+// 	t_table	*table;
+// 	t_clock	*clock;
+// 	int		dead_philo;
 
-	table = (t_table *)data;
-	clock = table->clock;
-	dead_philo = -1;
-	while (86)
-	{
-		if (table->meals_num != -1 
-			&& check_meals(table->philos, table->meals_num, table->philos_num))
-		{
-			safe_bool(&table->finish_flag, WRITE, &table->write, true);
-			break ;
-		}
-		dead_philo = philo_is_dead(table->philos, clock, table->philos_num);
-		if (dead_philo >= 0)
-		{
-			safe_bool(&table->dead_flag, WRITE, &table->write, true);
-			print_status(dead_philo, DEAD, clock->start_time);
-			break ;
-		}
-	}
-	return (NULL);
-}
+// 	table = (t_table *)data;
+// 	clock = table->clock;
+// 	dead_philo = -1;
+// 	while (86)
+// 	{
+// 		if (table->meals_num != -1 
+// 			&& check_meals(table->philos, table->meals_num, table->philos_num))
+// 		{
+// 			safe_bool(&table->finish_flag, WRITE, &table->write, true);
+// 			break ;
+// 		}
+// 		dead_philo = philo_is_dead(table->philos, clock, table->philos_num);
+// 		if (dead_philo >= 0)
+// 		{
+// 			safe_bool(&table->dead_flag, WRITE, &table->write, true);
+// 			print_status(dead_philo, DEAD, clock->start_time);
+// 			break ;
+// 		}
+// 	}
+// 	return (NULL);
+// }
 
 void	philo_eat(t_philo *philo, t_clock *clock)
 {
@@ -106,9 +106,9 @@ void	philo_think(t_philo *philo, t_clock *clock)
 
 void	wait_start(t_table *table)
 {
-	while (!safe_bool(&table->start_flag, READ, &table->read, NULL))
+	while (!table->start_flag)
 		;
-	printf("Broke from waiting after %ld ms\n", get_time() - table->clock->start_time);
+	// printf("Start time: %ld ms, spinlock break time: %ld\n", get_time(), table->clock->start_time);
 }
 
 void	*philo_routine(void *data)
@@ -117,18 +117,16 @@ void	*philo_routine(void *data)
 	t_table	*table;
 
 	philo = (t_philo *)data;
-	table = philo->table;
-		printf("Simulation started\n");
+	// table = philo->table;
 	wait_start(table);
-
-	printf("Dead flag: %d ~ finish flag: %d\n", table->dead_flag, table->finish_flag);
-	while (!safe_bool(&table->dead_flag, READ, &table->read, NULL)
-		&& !safe_bool(&table->finish_flag, READ, &table->read, NULL))
+	// printf("Simulation started\n");
+	// printf("Dead flag: ~ finish flag: %d\n", philo->table->finish_flag);
+	while (1)
 	{
 		printf("Simulation started\n");
-		philo_eat(philo, table->clock);
-		philo_sleep(philo, table->clock);
-		philo_think(philo, table->clock);
+		// philo_eat(philo, table->clock);
+		// philo_sleep(philo, table->clock);
+		// philo_think(philo, table->clock);
 	}
 	return (NULL);
 }

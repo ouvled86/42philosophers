@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:54:21 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/12 19:55:49 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:46:42 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	create_philos(t_table *data, int count)
 		data->philos[i].table = data;
 		data->philos[i].last_meal = -1;
 		data->philos[i].meals_eaten = 0;
-		// printf("Philo ID: %d\n", data->philos[i].philo_id);
+		printf("Philo ID: %d\n", data->philos[i].philo_id);
 		i++;
 	}
 }
@@ -67,7 +67,10 @@ void	table_mutex(t_mutex *mtx, t_calls call)
 
 	status = 0;
 	if (call == INIT)
+	{
 		status = pthread_mutex_init(mtx, NULL);
+		printf("Done, status: %d\n", status);
+	}
 	else if (call == LOCK)
 		status = pthread_mutex_lock(mtx);
 	else if (call == UNLOCK)
@@ -91,6 +94,7 @@ void	init_data(t_table **data)
 	assign_forks(table);
 	table->start_flag = false;
 	table->dead_flag = false;
-	table_mutex(&table->read, INIT);
-	table_mutex(&table->write, INIT);
+	table->finish_flag = false;
+	table_mutex(&table->table, INIT);
+	// table_mutex(table->write, INIT);
 }

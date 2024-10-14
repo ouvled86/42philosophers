@@ -104,6 +104,13 @@ void	philo_think(t_philo *philo, t_clock *clock)
 	print_status(philo->philo_id, THINK, clock->start_time);
 }
 
+void	wait_start(t_table *table)
+{
+	while (!safe_bool(&table->start_flag, READ, &table->read, NULL))
+		;
+	printf("Broke from waiting after %ld ms\n", get_time() - table->clock->start_time);
+}
+
 void	*philo_routine(void *data)
 {
 	t_philo	*philo;
@@ -111,12 +118,14 @@ void	*philo_routine(void *data)
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	printf("Start flag: %d, dead flag: %d, finish flag: %d\n", table->start_flag, table->dead_flag, table->finish_flag);
-	while (safe_bool(&table->start_flag, READ, &table->read, NULL))
-		;	
+		printf("Simulation started\n");
+	wait_start(table);
+
+	printf("Dead flag: %d ~ finish flag: %d\n", table->dead_flag, table->finish_flag);
 	while (!safe_bool(&table->dead_flag, READ, &table->read, NULL)
 		&& !safe_bool(&table->finish_flag, READ, &table->read, NULL))
 	{
+		printf("Simulation started\n");
 		philo_eat(philo, table->clock);
 		philo_sleep(philo, table->clock);
 		philo_think(philo, table->clock);

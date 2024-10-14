@@ -19,18 +19,15 @@ bool	safe_bool(bool *flag, t_operation op, t_mutex *mtx, bool value)
 	ret = false;
 	if (op == READ)
 	{
-		table_mutex(mtx, LOCK);
-		printf("MUTEX LOCKED\n");
+		// table_mutex(mtx, LOCK);
 		ret = *flag;
-		printf("ret is %d\n", *flag);
-		table_mutex(mtx, UNLOCK);
-		printf("MUTEX UNLOCK\n");
+		// table_mutex(mtx, UNLOCK);
 	}
 	else if (op == WRITE)
 	{
-		table_mutex(mtx, LOCK);
+		// table_mutex(mtx, LOCK);
 		*flag = value;
-		table_mutex(mtx, UNLOCK);
+		// table_mutex(mtx, UNLOCK);
 	}
 	return (ret);
 }
@@ -57,12 +54,12 @@ size_t	safe_num(size_t *num, t_operation op, t_mutex *mtx, size_t value)
 
 size_t	get_time(void)
 {
-	struct timeval	*tp;
+	struct timeval	tp;
 	size_t			ret;
 
-	if (gettimeofday(tp, NULL))
+	if (gettimeofday(&tp, NULL) == -1)
 		err_exit(-1, "Gettimeofday failed");
-	ret = (tp->tv_sec * 1000) + (tp->tv_usec / 1000);
+	ret = (tp.tv_sec * 1000) + (tp.tv_usec / 1000);
 	return (ret);
 }
 

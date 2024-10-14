@@ -50,6 +50,7 @@ static bool	parse_input(char **av, t_clock **clock)
 	c->t_to_die = ft_atol(av[2]);
 	c->t_to_eat = ft_atol(av[3]);
 	c->t_to_sleep = ft_atol(av[4]);
+	c->start_time = 0;
 	flag = check_clock(c);
 	*clock = c;
 	return (flag);

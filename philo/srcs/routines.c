@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/15 15:50:15 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:26:54 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	philo_is_dead(t_philo *philos, t_clock *clock, int count)
 	int		ret;
 	int		i;
 
-	ret = 0;
+	ret = -1;
 	i = 0;
 	while (i < count)
 	{
-		if (philos[i].last_meal > 0)
+		if (philos[i].last_meal != -1)
 		{
 			if (get_time() - philos[i].last_meal >= clock->t_to_die)
 				ret = i + 1;
@@ -122,7 +122,7 @@ void	*philo_routine(void *data)
 	if (philo->philo_id % 2 == 0)
 	{
 		printf("Philo ID %d is currently sleeping for %ld ms to avoid deadlock\n", philo->philo_id, table->clock->t_to_eat / 2);
-		usleep(philo->table->clock->t_to_eat / 4);
+		usleep(30 * 1e3);
 	}
 	while (!get_bool(&table->table, table->finish_flag))
 	{

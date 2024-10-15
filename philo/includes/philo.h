@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/15 15:34:38 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:13:01 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ size_t	get_num(t_mutex *mtx, size_t *num);
 size_t	get_time(void);
 void	print_status(int phid, t_status status, size_t start_time);
 void	psleep(size_t us);
+
+bool	check_meals(t_philo *philos, int meals_num, int count);
+int		philo_is_dead(t_philo *philos, t_clock *clock, int count);
 
 void	*monitor_routine(void *data);
 void	*philo_routine(void *data);

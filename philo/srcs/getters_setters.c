@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 21:53:39 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/15 14:42:59 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:34:29 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ void	psleep(size_t us)
 
 	current_time = get_time();
 	while (get_time() - current_time < us / 1e3)
-		usleep(us / 4);
+		usleep(us / 5);
 }

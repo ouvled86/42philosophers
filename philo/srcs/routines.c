@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/15 14:50:20 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:50:15 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,16 @@ int	philo_is_dead(t_philo *philos, t_clock *clock, int count)
 
 void	philo_eat(t_philo *philo, t_clock *clock)
 {
-	fork_handle(philo->first_fork, LOCK);
+	pthread_mutex_lock(philo->first_fork);
 	print_status(philo->philo_id, FORK, clock->start_time);
-	fork_handle(philo->second_fork, LOCK);
+	pthread_mutex_lock(philo->second_fork);
 	print_status(philo->philo_id, FORK, clock->start_time);
 	print_status(philo->philo_id, EAT, clock->start_time);
+	philo->meals_eaten++;
 	philo->last_meal = get_time();
 	psleep(clock->t_to_eat * 1000);
-	fork_handle(philo->first_fork, UNLOCK);
-	fork_handle(philo->second_fork, UNLOCK);
+	pthread_mutex_unlock(philo->first_fork);
+	pthread_mutex_unlock(philo->second_fork);
 }
 
 void	philo_sleep(t_philo *philo, t_clock *clock)
@@ -107,7 +108,7 @@ void	philo_think(t_philo *philo, t_clock *clock)
 void	wait_start(t_table *table)
 {
 	while (!get_bool(&table->table, table->start_flag))
-		usleep(5);
+		usleep(1);
 }
 
 void	*philo_routine(void *data)
@@ -125,6 +126,8 @@ void	*philo_routine(void *data)
 	}
 	while (!get_bool(&table->table, table->finish_flag))
 	{
+		if (table->meals_num != -1 && table->meals_num == philo->meals_eaten)
+			break ;
 		philo_eat(philo, table->clock);
 		philo_sleep(philo, table->clock);
 		philo_think(philo, table->clock);

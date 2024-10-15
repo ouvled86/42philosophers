@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:15:58 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/15 14:48:59 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:46:52 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ void	launch_dinner(t_table *data)
 		philo_handle(data->philos, CREATE, i);
 		i++;
 	}
-	set_num(&data->table, &data->clock->start_time, get_time());
-	set_bool(&data->table, &data->start_flag, true);
 	i = 0;
+	set_num(&data->table, &data->clock->start_time, get_time());
+	printf("Start time: %ld\n", data->clock->start_time);
+	set_bool(&data->table, &data->start_flag, true);
 	while (i < data->philos_num)
 	{
 		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
-		// philo_handle(data->philos, JOIN, i++);
+	while(1);
 }

@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/14 20:16:36 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:50:20 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void	philo_eat(t_philo *philo, t_clock *clock)
 	print_status(philo->philo_id, EAT, clock->start_time);
 	philo->last_meal = get_time();
 	psleep(clock->t_to_eat * 1000);
-	fork_handle(philo->second_fork, LOCK);
-	fork_handle(philo->first_fork, LOCK);
+	fork_handle(philo->first_fork, UNLOCK);
+	fork_handle(philo->second_fork, UNLOCK);
 }
 
 void	philo_sleep(t_philo *philo, t_clock *clock)
@@ -106,8 +106,8 @@ void	philo_think(t_philo *philo, t_clock *clock)
 
 void	wait_start(t_table *table)
 {
-	while (!safe_bool(&table->start_flag, READ, &table->table, NULL))
-		;
+	while (!get_bool(&table->table, table->start_flag))
+		usleep(5);
 }
 
 void	*philo_routine(void *data)
@@ -117,16 +117,22 @@ void	*philo_routine(void *data)
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	wait_start(table);
-	printf("THS - CURRENT TIME: %ld\n", get_time());
-	// printf("Simulation started\n");
-	// printf("Dead flag: ~ finish flag: %d\n", philo->table->finish_flag);
-	while (1)
+	wait_start(philo->table);
+	if (philo->philo_id % 2 == 0)
 	{
-		printf("Simulation started\n");
-		// philo_eat(philo, table->clock);
-		// philo_sleep(philo, table->clock);
-		// philo_think(philo, table->clock);
+		printf("Philo ID %d is currently sleeping for %ld ms to avoid deadlock\n", philo->philo_id, table->clock->t_to_eat / 2);
+		usleep(philo->table->clock->t_to_eat / 4);
+	}
+	while (!get_bool(&table->table, table->finish_flag))
+	{
+		philo_eat(philo, table->clock);
+		philo_sleep(philo, table->clock);
+		philo_think(philo, table->clock);
 	}
 	return (NULL);
 }
+
+	// printf("Dead flag: ~ finish flag: %d\n", philo->table->finish_flag);
+	// printf("THS - CURRENT TIME: %ld ~ start flag: %d\n", get_time(), philo->table->start_flag);
+	// printf("Simulation started, TH ID: %p, philo ID: %d table address: %p\n", &philo->thread, philo->philo_id, table);
+	// printf("Simulation started\n");

@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:54:21 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/14 19:46:42 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/15 12:15:13 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ void	create_philos(t_table *data, int count)
 	i = 0;
 	while (i < count)
 	{
-		// philo_handle(data->philos, CREATE, i);
-		data->philos[i].philo_id = i;
+		data->philos[i].philo_id = i + 1;
 		data->philos[i].table = data;
 		data->philos[i].last_meal = -1;
 		data->philos[i].meals_eaten = 0;
-		printf("Philo ID: %d\n", data->philos[i].philo_id);
+		// printf("CREATE PHILOS ~ Philo ID: %d ~ TABLE ADDRESS: %p\n", data->philos[i].philo_id, data);
 		i++;
 	}
 }
@@ -47,16 +46,8 @@ void	assign_forks(t_table *table)
 	i = 0;
 	while (i < table->philos_num)
 	{
-		if (philos[i].philo_id % 2 == 0)
-		{
-			philos[i].first_fork = &table->forks[i];
-			philos[i].second_fork = &table->forks[(i + 1) % table->philos_num];
-		}
-		else
-		{
-			philos[i].first_fork = &table->forks[(i + 1) % table->philos_num];
-			philos[i].second_fork = &table->forks[i];
-		}
+		philos[i].first_fork = &table->forks[i];
+		philos[i].second_fork = &table->forks[(i + 1) % table->philos_num];
 		i++;
 	}
 }
@@ -67,10 +58,7 @@ void	table_mutex(t_mutex *mtx, t_calls call)
 
 	status = 0;
 	if (call == INIT)
-	{
 		status = pthread_mutex_init(mtx, NULL);
-		printf("Done, status: %d\n", status);
-	}
 	else if (call == LOCK)
 		status = pthread_mutex_lock(mtx);
 	else if (call == UNLOCK)

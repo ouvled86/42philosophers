@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/14 19:47:06 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:58:59 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ void	assign_forks(t_table *table);
 void	table_mutex(t_mutex *mtx, t_calls call);
 void	init_data(t_table **data);
 
-bool	safe_bool(bool *flag, t_operation op, t_mutex *mtx, bool value);
-size_t	safe_num(size_t *num, t_operation op, t_mutex *mtx, size_t value);
+bool	get_bool(t_mutex *mtx, bool flag);
+void	set_bool(t_mutex *mtx, bool *flag, bool value);
+void	set_num(t_mutex *mtx, size_t *des, size_t value);
+size_t	get_num(t_mutex *mtx, size_t *num);
 size_t	get_time(void);
 void	print_status(int phid, t_status status, size_t start_time);
 void	psleep(size_t us);

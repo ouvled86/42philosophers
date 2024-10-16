@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:54:21 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/15 12:15:13 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:01:26 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	create_philos(t_table *data, int count)
 		data->philos[i].table = data;
 		data->philos[i].last_meal = -1;
 		data->philos[i].meals_eaten = 0;
-		// printf("CREATE PHILOS ~ Philo ID: %d ~ TABLE ADDRESS: %p\n", data->philos[i].philo_id, data);
+		data->philos[i].full = false;
 		i++;
 	}
 }
@@ -84,5 +84,4 @@ void	init_data(t_table **data)
 	table->dead_flag = false;
 	table->finish_flag = false;
 	table_mutex(&table->table, INIT);
-	// table_mutex(table->write, INIT);
 }

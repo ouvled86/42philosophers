@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 21:53:39 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/15 15:34:29 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:01:00 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,4 @@ size_t	get_time(void)
 		err_exit(-1, "Gettimeofday failed");
 	ret = (tp.tv_sec * 1000) + (tp.tv_usec / 1000);
 	return (ret);
-}
-
-void	print_status(int phid, t_status status, size_t start_time)
-{
-	size_t	current_time;
-
-	current_time = get_time() - start_time;
-	if (status == FORK)
-		printf("%ld %d has taken a fork\n", current_time, phid);
-	else if (status == EAT)
-		printf("%ld %d is eating\n", current_time, phid);
-	else if (status == SLEEP)
-		printf("%ld %d is sleeping\n", current_time, phid);
-	else if (status == THINK)
-		printf("%ld %d is thinking\n", current_time, phid);
-	else if (status == DEAD)
-		printf("%ld %d died\n", current_time, phid);
-}
-
-void	psleep(size_t us)
-{
-	size_t	current_time;
-
-	current_time = get_time();
-	while (get_time() - current_time < us / 1e3)
-		usleep(us / 5);
 }

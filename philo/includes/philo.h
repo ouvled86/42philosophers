@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/15 16:13:01 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:56:01 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@
 typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_table	t_table;
+
 typedef struct s_philo
 {
 	int			philo_id;
+	bool		full;
 	size_t		meals_eaten;
 	size_t		last_meal;
 	t_mutex		*first_fork;
@@ -69,12 +71,6 @@ typedef enum e_calls
 	UNLOCK,
 }	t_calls;
 
-typedef enum e_operation
-{
-	READ,
-	WRITE,
-}	t_operation;
-
 typedef enum e_status
 {
 	FORK,
@@ -111,12 +107,9 @@ void	psleep(size_t us);
 
 bool	check_meals(t_philo *philos, int meals_num, int count);
 int		philo_is_dead(t_philo *philos, t_clock *clock, int count);
-
-void	*monitor_routine(void *data);
 void	*philo_routine(void *data);
 
 void	launch_dinner(t_table *data);
-
-void	*func(void *data);
+void	monitor_dinner(t_table *data);
 
 #endif

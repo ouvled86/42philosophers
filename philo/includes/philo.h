@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/16 11:56:01 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:38:02 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_table
 	bool		finish_flag;
 	bool		start_flag;
 	size_t		meals_num;
-	pthread_t	monitor;
 	t_philo		*philos;
 	t_mutex		*forks;
 	t_mutex		table;
@@ -102,7 +101,8 @@ void	set_bool(t_mutex *mtx, bool *flag, bool value);
 void	set_num(t_mutex *mtx, size_t *des, size_t value);
 size_t	get_num(t_mutex *mtx, size_t *num);
 size_t	get_time(void);
-void	print_status(int phid, t_status status, size_t start_time);
+void	print_status(int phid, t_status status, size_t start_time, 
+			t_mutex *mtx);
 void	psleep(size_t us);
 
 bool	check_meals(t_philo *philos, int meals_num, int count);

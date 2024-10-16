@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:15:58 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/16 11:57:25 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:17:35 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,19 @@ int	philo_is_dead(t_philo *philos, t_clock *clock, int count)
 			i++;
 		if (philos[i].last_meal != -1)
 		{
-			if (get_time() - philos[i].last_meal >= clock->t_to_die)
+			if (get_time() - philos[i].last_meal >= clock->t_to_die){
 				ret = i + 1;
+				philos->table->dead_flag = true;
+				break;
+			}
 		}
 		else
 		{
-			if (get_time() - clock->start_time >= clock->t_to_die)
+			if (get_time() - clock->start_time >= clock->t_to_die){
 				ret = i + 1;
+				philos->table->dead_flag = true;
+				break;
+			}
 		}
 		i++;
 	}
@@ -68,10 +74,9 @@ void	monitor_dinner(t_table *data)
 			break ;
 		}
 		dead_philo = philo_is_dead(data->philos, data->clock, data->philos_num);
-		if (dead_philo >= 0)
+		if (get_bool(&data->table, data->dead_flag))
 		{
-			set_bool(&data->table, &data->dead_flag, true);
-			print_status(dead_philo + 1, DEAD, data->clock->start_time);
+			print_status(dead_philo, DEAD, data->clock->start_time, &data->status);
 			break ;
 		}
 	}

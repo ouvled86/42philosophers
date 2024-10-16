@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:54:21 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/16 12:01:26 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:36:50 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void	init_data(t_table **data)
 	table->start_flag = false;
 	table->dead_flag = false;
 	table->finish_flag = false;
+	pthread_mutex_init(&table->status, NULL);
 	table_mutex(&table->table, INIT);
 }

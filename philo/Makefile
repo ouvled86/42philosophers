@@ -9,8 +9,7 @@ SRCS =	srcs/main.c \
 		srcs/simulation.c \
 		srcs/simulation_utils.c \
 		srcs/routines.c \
-		srcs/getters_setters.c \
-		srcs/safe_exit.c
+		srcs/getters_setters.c
 
 OBJS = $(SRCS:.c=.o)
 

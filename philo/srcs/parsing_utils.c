@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:51:27 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 13:52:27 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:14:37 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,10 @@ bool	check_clock(t_clock *c)
 		|| c->t_to_sleep < 60)
 		ret = false;
 	return (ret);
+}
+
+void	err_exit(int status, char *msg)
+{
+	printf("%s\n", msg);
+	exit (status);
 }

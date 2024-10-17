@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:49:08 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/16 12:43:55 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:18:16 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_table	*check_args_input(int ac, char **av)
 	table = (t_table *)malloc(sizeof(t_table));
 	table->clock = clock;
 	table->philos_num = ft_atol(av[1]);
-	if (table->philos_num > 200)
-		err_exit (50, "Too many philos, max is 200");
+	if (table->philos_num > 200 || table->philos_num <= 0)
+		err_exit (50, "Philosephers number should be from 1-200");
 	if (!av[5])
 		table->meals_num = -1;
 	else

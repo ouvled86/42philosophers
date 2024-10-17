@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 16:12:11 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:25:33 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ static int	philo_eat(t_philo *philo, t_clock *clock)
 		return (1);
 	print_status(philo->philo_id, FORK, clock->start_time, philo->table);
 	pthread_mutex_lock(philo->second_fork);
-	philo->last_meal = get_time();
+	set_num(&philo->table->table, &philo->last_meal, get_time());
 	print_status(philo->philo_id, FORK, clock->start_time, philo->table);
 	print_status(philo->philo_id, EAT, clock->start_time, philo->table);
 	psleep(clock->t_to_eat * 1000);
-	philo->meals_eaten++;
+	set_num(&philo->table->table, &philo->meals_eaten, philo->meals_eaten + 1);
 	if (philo->table->meals_num != -1 
 		&& philo->table->meals_num == philo->meals_eaten)
-		philo->full = true;
+		set_bool(&philo->table->table, &philo->full, true);
 	pthread_mutex_unlock(philo->first_fork);
 	pthread_mutex_unlock(philo->second_fork);
 	return (0);

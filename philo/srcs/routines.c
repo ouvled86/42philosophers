@@ -6,19 +6,19 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 14:06:28 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:37:21 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static void	philo_eat(t_philo *philo, t_clock *clock)
+static int	philo_eat(t_philo *philo, t_clock *clock)
 {
 	pthread_mutex_lock(philo->first_fork);
 	if (get_bool(&philo->table->table, philo->table->dead_flag)
 		|| get_bool(&philo->table->table, philo->table->finish_flag)
 		|| get_bool(&philo->table->table, philo->full))
-		exit (0);
+		return (1);
 	print_status(philo->philo_id, FORK, clock->start_time, 
 		&philo->table->status);
 	pthread_mutex_lock(philo->second_fork);
@@ -34,25 +34,28 @@ static void	philo_eat(t_philo *philo, t_clock *clock)
 		philo->full = true;
 	pthread_mutex_unlock(philo->first_fork);
 	pthread_mutex_unlock(philo->second_fork);
+	return (0);
 }
 
-static void	philo_sleep(t_philo *philo, t_clock *clock)
+static int	philo_sleep(t_philo *philo, t_clock *clock)
 {
 	if (get_bool(&philo->table->table, philo->table->dead_flag)
 		|| get_bool(&philo->table->table, philo->table->finish_flag))
-		exit (0);
+		return (1);
 	print_status(philo->philo_id, SLEEP, clock->start_time, 
 		&philo->table->status);
 	psleep(clock->t_to_sleep * 1000);
+	return (0);
 }
 
-static void	philo_think(t_philo *philo, t_clock *clock)
+static int	philo_think(t_philo *philo, t_clock *clock)
 {
 	if (get_bool(&philo->table->table, philo->table->dead_flag)
 		|| get_bool(&philo->table->table, philo->table->finish_flag))
-		exit (0);
+		return (1);
 	print_status(philo->philo_id, THINK, clock->start_time, 
 		&philo->table->status);
+	return (0);
 }
 
 static void	wait_start(t_table *table)
@@ -77,9 +80,12 @@ void	*philo_routine(void *data)
 	{
 		if (table->meals_num == 0)
 			break ;
-		philo_eat(philo, table->clock);
-		philo_sleep(philo, table->clock);
-		philo_think(philo, table->clock);
+		if (philo_eat(philo, table->clock))
+			break ;
+		if (philo_sleep(philo, table->clock))
+			break ;
+		if (philo_think(philo, table->clock))
+			break ;
 	}
 	return (NULL);
 }

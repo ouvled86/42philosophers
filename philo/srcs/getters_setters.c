@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 21:53:39 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/16 12:01:00 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:52:27 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ void	set_bool(t_mutex *mtx, bool *flag, bool value)
 	pthread_mutex_unlock(mtx);
 }
 
-void	set_num(t_mutex *mtx, size_t *des, size_t value)
+void	set_num(t_mutex *mtx, long *des, long value)
 {
 	pthread_mutex_lock(mtx);
 	*des = value;
 	pthread_mutex_unlock(mtx);
 }
 
-size_t	get_num(t_mutex *mtx, size_t *num)
+long	get_num(t_mutex *mtx, long *num)
 {
-	size_t	ret;
+	long	ret;
 
 	pthread_mutex_unlock(mtx);
 	ret = *num;
@@ -46,10 +46,10 @@ size_t	get_num(t_mutex *mtx, size_t *num)
 	return (ret);
 }
 
-size_t	get_time(void)
+long	get_time(void)
 {
 	struct timeval	tp;
-	size_t			ret;
+	long			ret;
 
 	if (gettimeofday(&tp, NULL) == -1)
 		err_exit(-1, "Gettimeofday failed");

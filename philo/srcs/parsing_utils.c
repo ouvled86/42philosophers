@@ -6,15 +6,15 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:51:27 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/06/22 20:59:27 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:52:27 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-size_t	ft_strlen(char *s)
+long	ft_strlen(char *s)
 {
-	size_t	r;
+	long	r;
 
 	r = 0;
 	while (s[r])
@@ -42,10 +42,10 @@ bool	check_num(char *av)
 	return (flag);
 }
 
-size_t	ft_atol(char *s)
+long	ft_atol(char *s)
 {
 	int		i;
-	size_t	ret;
+	long	ret;
 
 	i = 0;
 	ret = 0;

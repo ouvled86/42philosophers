@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 13:59:37 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:06:28 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	philo_eat(t_philo *philo, t_clock *clock)
 {
 	pthread_mutex_lock(philo->first_fork);
 	if (get_bool(&philo->table->table, philo->table->dead_flag)
-		|| get_bool(&philo->table->table, philo->table->finish_flag))
+		|| get_bool(&philo->table->table, philo->table->finish_flag)
+		|| get_bool(&philo->table->table, philo->full))
 		exit (0);
 	print_status(philo->philo_id, FORK, clock->start_time, 
 		&philo->table->status);

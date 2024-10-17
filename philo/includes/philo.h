@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 13:52:27 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:09:31 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ long	get_num(t_mutex *mtx, long *num);
 void	set_num(t_mutex *mtx, long *des, long value);
 long	get_time(void);
 void	print_status(int phid, t_status status, long start_time, 
-			t_mutex *mtx);
+			t_table *data);
 void	psleep(long us);
 
 void	*philo_routine(void *data);

@@ -6,32 +6,32 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 22:39:26 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 13:52:27 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:09:01 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	print_status(int phid, t_status status, long start_time, t_mutex *mtx)
+void	print_status(int phid, t_status status, long start_time, t_table *data)
 {
 	long	current_time;
 
-	pthread_mutex_lock(mtx);
+	pthread_mutex_lock(&data->status);
 	current_time = get_time() - start_time;
-	if (status == FORK)
+	if (status == FORK && !get_bool(&data->table, data->dead_flag))
 		printf("%ld %d has taken a fork\n", current_time, phid);
-	else if (status == EAT)
+	else if (status == EAT && !get_bool(&data->table, data->dead_flag))
 		printf("%ld %d is eating\n", current_time, phid);
-	else if (status == SLEEP)
+	else if (status == SLEEP && !get_bool(&data->table, data->dead_flag))
 		printf("%ld %d is sleeping\n", current_time, phid);
-	else if (status == THINK)
+	else if (status == THINK && !get_bool(&data->table, data->dead_flag))
 		printf("%ld %d is thinking\n", current_time, phid);
 	else if (status == DEAD)
 	{
 		printf("%ld %d died\n", current_time, phid);
 		psleep(1000);
 	}
-	pthread_mutex_unlock(mtx);
+	pthread_mutex_unlock(&data->status);
 }
 
 void	psleep(long us)

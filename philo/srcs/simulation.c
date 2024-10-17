@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:15:58 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 13:11:37 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:10:13 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	monitor_dinner(t_table *data)
 		{
 			set_bool(&data->table, &data->dead_flag, true);
 			print_status(dead_philo, DEAD, data->clock->start_time, 
-				&data->status);
+				data);
 			break ;
 		}
 	}

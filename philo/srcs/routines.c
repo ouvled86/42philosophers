@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 15:37:21 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:12:11 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ static int	philo_eat(t_philo *philo, t_clock *clock)
 		|| get_bool(&philo->table->table, philo->table->finish_flag)
 		|| get_bool(&philo->table->table, philo->full))
 		return (1);
-	print_status(philo->philo_id, FORK, clock->start_time, 
-		&philo->table->status);
+	print_status(philo->philo_id, FORK, clock->start_time, philo->table);
 	pthread_mutex_lock(philo->second_fork);
 	philo->last_meal = get_time();
-	print_status(philo->philo_id, FORK, clock->start_time, 
-		&philo->table->status);
-	print_status(philo->philo_id, EAT, clock->start_time, 
-		&philo->table->status);
+	print_status(philo->philo_id, FORK, clock->start_time, philo->table);
+	print_status(philo->philo_id, EAT, clock->start_time, philo->table);
 	psleep(clock->t_to_eat * 1000);
 	philo->meals_eaten++;
 	if (philo->table->meals_num != -1 
@@ -42,8 +39,7 @@ static int	philo_sleep(t_philo *philo, t_clock *clock)
 	if (get_bool(&philo->table->table, philo->table->dead_flag)
 		|| get_bool(&philo->table->table, philo->table->finish_flag))
 		return (1);
-	print_status(philo->philo_id, SLEEP, clock->start_time, 
-		&philo->table->status);
+	print_status(philo->philo_id, SLEEP, clock->start_time, philo->table);
 	psleep(clock->t_to_sleep * 1000);
 	return (0);
 }
@@ -53,8 +49,7 @@ static int	philo_think(t_philo *philo, t_clock *clock)
 	if (get_bool(&philo->table->table, philo->table->dead_flag)
 		|| get_bool(&philo->table->table, philo->table->finish_flag))
 		return (1);
-	print_status(philo->philo_id, THINK, clock->start_time, 
-		&philo->table->status);
+	print_status(philo->philo_id, THINK, clock->start_time, philo->table);
 	return (0);
 }
 

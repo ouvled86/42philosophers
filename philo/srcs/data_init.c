@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:54:21 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/16 13:36:50 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:33:59 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ void	create_forks(t_table *data, int count)
 
 	i = 0;
 	while (i < count)
-		fork_handle(&data->forks[i++], INIT);
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL))
+			err_exit(20, "Philosophers: pthread_mutex_init failed\n");
+		i++;
+	}
 }
 
 void	assign_forks(t_table *table)
@@ -52,22 +56,6 @@ void	assign_forks(t_table *table)
 	}
 }
 
-void	table_mutex(t_mutex *mtx, t_calls call)
-{
-	int	status;
-
-	status = 0;
-	if (call == INIT)
-		status = pthread_mutex_init(mtx, NULL);
-	else if (call == LOCK)
-		status = pthread_mutex_lock(mtx);
-	else if (call == UNLOCK)
-		status = pthread_mutex_lock(mtx);
-	else if (call == DESTROY)
-		status = pthread_mutex_destroy(mtx);
-	handle_errno(status);
-}
-
 void	init_data(t_table **data)
 {
 	t_table	*table;
@@ -83,6 +71,8 @@ void	init_data(t_table **data)
 	table->start_flag = false;
 	table->dead_flag = false;
 	table->finish_flag = false;
-	pthread_mutex_init(&table->status, NULL);
-	table_mutex(&table->table, INIT);
+	if (pthread_mutex_init(&table->status, NULL))
+		err_exit(20, "Philosophers: pthread_mutex_init failed\n");
+	if (pthread_mutex_init(&table->table, NULL))
+		err_exit(20, "Philosophers: pthread_mutex_init failed\n");
 }

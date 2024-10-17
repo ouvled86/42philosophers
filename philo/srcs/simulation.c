@@ -6,13 +6,13 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:15:58 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/16 16:00:13 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:11:37 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-bool	check_meals(t_philo *philos, int meals_num, int count)
+static bool	check_meals(t_philo *philos, int meals_num, int count)
 {
 	bool	ret;
 	int		i;
@@ -28,23 +28,18 @@ bool	check_meals(t_philo *philos, int meals_num, int count)
 	return (ret);
 }
 
-int	philo_is_dead(t_philo *philos, t_clock *clock, int count)
+static int	philo_is_dead(t_philo *philos, t_clock *clock, int count)
 {
 	int		i;
 
 	i = 0;
 	while (i < count)
 	{
-		if (philos[i].full == true)
+		if (philos[i].full == true && i + 1 < count)
 			i++;
 		if (philos[i].last_meal != -1)
 		{
 			if (get_time() - philos[i].last_meal >= clock->t_to_die)
-				return (i + 1);
-		}
-		else
-		{
-			if (get_time() - clock->start_time >= clock->t_to_die)
 				return (i + 1);
 		}
 		i++;
@@ -62,7 +57,7 @@ void	monitor_dinner(t_table *data)
 		if (data->meals_num != -1 
 			&& check_meals(data->philos, data->meals_num, data->philos_num))
 		{
-			set_bool(&data->table, &data->dead_flag, true);
+			set_bool(&data->table, &data->finish_flag, true);
 			break ;
 		}
 		dead_philo = philo_is_dead(data->philos, data->clock, data->philos_num);
@@ -83,16 +78,18 @@ void	launch_dinner(t_table *data)
 	i = 0;
 	while (i < data->philos_num)
 	{
-		philo_handle(data->philos, CREATE, i);
+		if (pthread_create(&data->philos[i].thread, NULL, philo_routine, 
+				&data->philos[i]))
+			err_exit(19, "philosophers: pthread_create failed!\n");
 		i++;
 	}
 	i = 0;
 	set_num(&data->table, &data->clock->start_time, get_time());
-	printf("Start time: %ld\n", data->clock->start_time);
 	set_bool(&data->table, &data->start_flag, true);
 	while (i < data->philos_num)
 	{
-		pthread_join(data->philos[i].thread, NULL);
+		if (pthread_detach(data->philos[i].thread))
+			err_exit(23, "philosophers: pthread_detach failed!\n");
 		i++;
 	}
 }

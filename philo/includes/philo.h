@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/16 13:38:02 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:55:19 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,30 +86,24 @@ bool	check_clock(t_clock *c);
 t_table	*check_args_input(int ac, char **av);
 void	err_exit(int status, char *msg);
 
-void	philo_handle(t_philo *philos, t_calls call, int thread_id);
-void	fork_handle(t_mutex *fork, t_calls call);
-void	handle_errno(int status);
-
 void	create_philos(t_table *data, int count);
 void	create_forks(t_table *data, int count);
 void	assign_forks(t_table *table);
-void	table_mutex(t_mutex *mtx, t_calls call);
 void	init_data(t_table **data);
 
 bool	get_bool(t_mutex *mtx, bool flag);
 void	set_bool(t_mutex *mtx, bool *flag, bool value);
-void	set_num(t_mutex *mtx, size_t *des, size_t value);
 size_t	get_num(t_mutex *mtx, size_t *num);
+void	set_num(t_mutex *mtx, size_t *des, size_t value);
 size_t	get_time(void);
 void	print_status(int phid, t_status status, size_t start_time, 
 			t_mutex *mtx);
 void	psleep(size_t us);
 
-bool	check_meals(t_philo *philos, int meals_num, int count);
-int		philo_is_dead(t_philo *philos, t_clock *clock, int count);
 void	*philo_routine(void *data);
 
 void	launch_dinner(t_table *data);
 void	monitor_dinner(t_table *data);
+void	clean_data(t_table *data);
 
 #endif

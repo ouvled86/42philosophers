@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:54:21 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 12:33:59 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/19 19:08:58 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,9 @@ void	init_data(t_table **data)
 	if (pthread_mutex_init(&table->status, NULL))
 		err_exit(20, "Philosophers: pthread_mutex_init failed\n");
 	if (pthread_mutex_init(&table->table, NULL))
+		err_exit(20, "Philosophers: pthread_mutex_init failed\n");
+	if (pthread_mutex_init(&table->time, NULL))
+		err_exit(20, "Philosophers: pthread_mutex_init failed\n");
+	if (pthread_mutex_init(&table->meals, NULL))
 		err_exit(20, "Philosophers: pthread_mutex_init failed\n");
 }

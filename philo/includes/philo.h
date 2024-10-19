@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:33:06 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 16:09:31 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/19 19:08:29 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_table
 	t_philo		*philos;
 	t_mutex		*forks;
 	t_mutex		table;
+	t_mutex		time;
+	t_mutex		meals;
 	t_mutex		status;
 	t_clock		*clock;
 }				t_table;
@@ -91,7 +93,7 @@ void	create_forks(t_table *data, int count);
 void	assign_forks(t_table *table);
 void	init_data(t_table **data);
 
-bool	get_bool(t_mutex *mtx, bool flag);
+bool	get_bool(t_mutex *mtx, bool *flag);
 void	set_bool(t_mutex *mtx, bool *flag, bool value);
 long	get_num(t_mutex *mtx, long *num);
 void	set_num(t_mutex *mtx, long *des, long value);

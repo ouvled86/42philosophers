@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:15:58 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 16:13:53 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/19 20:13:37 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static bool	check_meals(t_philo *philos, int meals_num, int count)
 	i = 0;
 	while (i < count)
 	{
-		if (philos[i].meals_eaten < meals_num)
+		if (get_num(&philos[i].table->meals, 
+				&philos[i].meals_eaten) < meals_num)
 			ret = false;
 		i++;
 	}
@@ -31,15 +32,18 @@ static bool	check_meals(t_philo *philos, int meals_num, int count)
 static int	philo_is_dead(t_philo *philos, t_clock *clock, int count)
 {
 	int		i;
+	long	last_meal;
 
 	i = 0;
 	while (i < count)
 	{
-		if (philos[i].full == true && i + 1 < count)
+		if (get_bool(&philos[i].table->meals, &philos[i].full) && i + 1 < count)
 			i++;
-		if (philos[i].last_meal != -1)
+		last_meal = get_num(&philos[i].table->time, &philos[i].last_meal);
+		if (last_meal != -1)
 		{
-			if (get_time() - philos[i].last_meal >= clock->t_to_die)
+			if (get_time() - get_num(&philos[i].table->time, 
+					&philos[i].last_meal) >= clock->t_to_die)
 				return (i + 1);
 		}
 		i++;
@@ -83,7 +87,7 @@ void	launch_dinner(t_table *data)
 		i++;
 	}
 	i = 0;
-	set_num(&data->table, &data->clock->start_time, get_time());
+	set_num(&data->time, &data->clock->start_time, get_time());
 	set_bool(&data->table, &data->start_flag, true);
 	while (i < data->philos_num)
 	{

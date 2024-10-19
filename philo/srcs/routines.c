@@ -6,7 +6,7 @@
 /*   By: ouel-bou <ouel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:56:25 by ouel-bou          #+#    #+#             */
-/*   Updated: 2024/10/17 16:25:33 by ouel-bou         ###   ########.fr       */
+/*   Updated: 2024/10/19 20:10:06 by ouel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,21 @@
 static int	philo_eat(t_philo *philo, t_clock *clock)
 {
 	pthread_mutex_lock(philo->first_fork);
-	if (get_bool(&philo->table->table, philo->table->dead_flag)
-		|| get_bool(&philo->table->table, philo->table->finish_flag)
-		|| get_bool(&philo->table->table, philo->full))
+	if (get_bool(&philo->table->table, &philo->table->dead_flag)
+		|| get_bool(&philo->table->table, &philo->table->finish_flag)
+		|| get_bool(&philo->table->table, &philo->full))
 		return (1);
 	print_status(philo->philo_id, FORK, clock->start_time, philo->table);
 	pthread_mutex_lock(philo->second_fork);
-	set_num(&philo->table->table, &philo->last_meal, get_time());
+	set_num(&philo->table->time, &philo->last_meal, get_time());
 	print_status(philo->philo_id, FORK, clock->start_time, philo->table);
 	print_status(philo->philo_id, EAT, clock->start_time, philo->table);
 	psleep(clock->t_to_eat * 1000);
-	set_num(&philo->table->table, &philo->meals_eaten, philo->meals_eaten + 1);
+	set_num(&philo->table->meals, &philo->meals_eaten, 
+		get_num(&philo->table->meals, &philo->meals_eaten) + 1);
 	if (philo->table->meals_num != -1 
 		&& philo->table->meals_num == philo->meals_eaten)
-		set_bool(&philo->table->table, &philo->full, true);
+		set_bool(&philo->table->meals, &philo->full, true);
 	pthread_mutex_unlock(philo->first_fork);
 	pthread_mutex_unlock(philo->second_fork);
 	return (0);
@@ -36,8 +37,8 @@ static int	philo_eat(t_philo *philo, t_clock *clock)
 
 static int	philo_sleep(t_philo *philo, t_clock *clock)
 {
-	if (get_bool(&philo->table->table, philo->table->dead_flag)
-		|| get_bool(&philo->table->table, philo->table->finish_flag))
+	if (get_bool(&philo->table->table, &philo->table->dead_flag)
+		|| get_bool(&philo->table->table, &philo->table->finish_flag))
 		return (1);
 	print_status(philo->philo_id, SLEEP, clock->start_time, philo->table);
 	psleep(clock->t_to_sleep * 1000);
@@ -46,8 +47,8 @@ static int	philo_sleep(t_philo *philo, t_clock *clock)
 
 static int	philo_think(t_philo *philo, t_clock *clock)
 {
-	if (get_bool(&philo->table->table, philo->table->dead_flag)
-		|| get_bool(&philo->table->table, philo->table->finish_flag))
+	if (get_bool(&philo->table->table, &philo->table->dead_flag)
+		|| get_bool(&philo->table->table, &philo->table->finish_flag))
 		return (1);
 	print_status(philo->philo_id, THINK, clock->start_time, philo->table);
 	return (0);
@@ -55,8 +56,8 @@ static int	philo_think(t_philo *philo, t_clock *clock)
 
 static void	wait_start(t_table *table)
 {
-	while (!get_bool(&table->table, table->start_flag))
-		usleep(1);
+	while (!get_bool(&table->table, &table->start_flag))
+		;
 }
 
 void	*philo_routine(void *data)
@@ -69,9 +70,10 @@ void	*philo_routine(void *data)
 	wait_start(philo->table);
 	if (philo->philo_id % 2 == 0)
 		usleep(30 * 1e3);
-	set_num(&table->table, &philo->last_meal, table->clock->start_time);
-	while (!get_bool(&table->table, table->dead_flag)
-		&& !get_bool(&table->table, table->finish_flag))
+	set_num(&table->time, &philo->last_meal, get_num(&table->table, 
+			&table->clock->start_time));
+	while (!get_bool(&table->table, &table->dead_flag)
+		&& !get_bool(&table->table, &table->finish_flag))
 	{
 		if (table->meals_num == 0)
 			break ;
